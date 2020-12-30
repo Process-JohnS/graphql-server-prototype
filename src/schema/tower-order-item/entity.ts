@@ -2,7 +2,7 @@
 import { Entity, Column, PrimaryColumn, ManyToOne, BeforeInsert, BaseEntity } from 'typeorm';
 import { ObjectType, Field, ID, InputType } from 'type-graphql';
 import { nanoid } from 'nanoid';
-import { TowerOrder } from './tower-order';
+import { TowerOrder } from './../tower-order/entity';
 
 
 @InputType('TowerOrderItemInput')

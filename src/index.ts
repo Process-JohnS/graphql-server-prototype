@@ -6,11 +6,11 @@ import { createConnection, ConnectionOptions, useContainer } from 'typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 // entities
-import { TowerOrder } from './entity/tower-order';
-import { TowerOrderItem } from './entity/tower-order-item';
+import { TowerOrder } from './schema/tower-order/entity';
+import { TowerOrderItem } from './schema/tower-order-item/entity';
 
 // resolvers
-import { TowerOrderResolver } from './resolvers/tower-order';
+import { TowerOrderResolver } from './schema/tower-order/resolver';
 
 
 import graphql from './server/graphql';
@@ -27,7 +27,7 @@ import rest from './server/rest';
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '',
+    password: 'postgres',
     database: 'connector_db',
     synchronize: true,
     logging: false,
@@ -35,7 +35,11 @@ import rest from './server/rest';
     namingStrategy: new SnakeNamingStrategy()
   };
 
-  await createConnection(connectionOptions);
+  try {
+    await createConnection(connectionOptions);
+  } catch (e) {
+    console.error(`Connection error: ${e.message}`);
+  }
 
 
 

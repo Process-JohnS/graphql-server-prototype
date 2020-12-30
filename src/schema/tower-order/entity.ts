@@ -1,8 +1,9 @@
 
+
 import { Entity, Column, PrimaryColumn, BeforeInsert, OneToMany, BaseEntity } from 'typeorm';
 import { ObjectType, Field, ID, registerEnumType, Int, InputType } from 'type-graphql';
 import { nanoid } from 'nanoid';
-import { TowerOrderItem } from './tower-order-item';
+import { TowerOrderItem } from './../tower-order-item/entity';
 
 
 export enum SaleType {

@@ -2,7 +2,7 @@
 import { Resolver } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-import { TowerOrderItem } from './../entity/tower-order-item';
+import { TowerOrderItem } from './entity';
 
 
 @Resolver(of => TowerOrderItem)

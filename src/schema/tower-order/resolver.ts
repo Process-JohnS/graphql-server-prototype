@@ -1,10 +1,10 @@
 
+
 import { Resolver, Query, Mutation, Arg, FieldResolver, Root } from 'type-graphql';
 import { Repository } from 'typeorm';
 import { InjectRepository } from 'typeorm-typedi-extensions';
-
-import { TowerOrderItem } from '../entity/tower-order-item';
-import { TowerOrder } from './../entity/tower-order';
+import { TowerOrder } from './entity';
+import { TowerOrderItem } from '../tower-order-item/entity';
 
 
 @Resolver(of => TowerOrder)
@@ -18,14 +18,14 @@ export class TowerOrderResolver {
     return TowerOrder.find();
   }
 
-  @Mutation(() => TowerOrder)
+  @Mutation(returns => TowerOrder)
   async createOrder(@Arg('input') input: TowerOrder) {
     let newOrder = input as TowerOrder;
     let savedOrder = await newOrder.save();
     return savedOrder;
   }
 
-  @Mutation(() => [TowerOrder])
+  @Mutation(returns => [TowerOrder])
   async deleteAllOrders() {
     let savedOrders = await this.orderRepository.find();
     savedOrders.forEach(o => o.remove());
@@ -35,7 +35,7 @@ export class TowerOrderResolver {
 
   /* Set Synchronization */
 
-  @Mutation(() => [TowerOrder])
+  @Mutation(returns => [TowerOrder])
   async syncAllOrders(): Promise<TowerOrder[]> {
     let syncedOrders: TowerOrder[] = [];
     let unsyncedOrders = await this.orderRepository.find({ isSynced: false });
@@ -45,7 +45,7 @@ export class TowerOrderResolver {
     return syncedOrders;
   }
 
-  @Mutation(() => [TowerOrder])
+  @Mutation(returns => [TowerOrder])
   async unsyncAllOrders(): Promise<TowerOrder[]> {
     let unsyncedOrders: TowerOrder[] = [];
     let syncedOrders = await this.orderRepository.find({ isSynced: true });
